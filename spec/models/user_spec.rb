@@ -47,7 +47,7 @@ describe User do
   		addresses.each do |invalid_address|
   			@user.email = invalid_address
   			@user.should_not be_valid
- 		end 			
+   		end 			
   	end
   end
 
@@ -57,7 +57,7 @@ describe User do
   		addresses.each do |valid_address|
   			@user.email = valid_address
   			@user.should be_valid
- 		end 			
+   		end 			
   	end
   end
 
@@ -90,6 +90,16 @@ describe User do
   describe "when password is too short" do
   	before { @user.password = @user.password_confirmation = "a" * 5}
   	it { should_not be_valid}
+  end
+
+  describe "email address with mixed case" do
+  	let(:mixed_case_email) {"Foo@ExAmPle.com"}
+
+  	it "should be saved as all lower-case" do
+  		@user.email = mixed_case_email
+  		@user.save
+  		@user.reload.email.should == mixed_case_email.downcase
+  	end
   end
 
   describe "return value of authenticate method" do
