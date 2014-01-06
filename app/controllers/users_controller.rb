@@ -30,7 +30,6 @@ class UsersController < ApplicationController
   end
 
   def update
-    @user = User.find(params[:id])
     if @user.update_attributes(params[:user])
       #Handle a successful update
       sign_in @user
